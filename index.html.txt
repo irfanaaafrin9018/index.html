@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Hubby ❤️</title>
+
+<meta name="theme-color" content="#ffb6c1">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
+
+body{
+  background:linear-gradient(135deg,#ffb6c1,#ffd1dc);
+  color:white;
+  text-align:center;
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+
+.page{
+  display:none;
+  min-height:100vh;
+  padding:70px 20px;
+  position:relative;
+}
+.page.active{display:block}
+
+button{
+  padding:12px 25px;
+  margin:10px;
+  border:none;
+  border-radius:25px;
+  background:rgba(255,255,255,0.35);
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+
+input{
+  pointer-events:auto;
+  z-index:10;
+}
+
+.home{
+  position:absolute;
+  top:15px;
+  left:15px;
+}
+
+p{
+  font-size:18px;
+  line-height:1.7;
+  text-shadow:0 2px 6px rgba(0,0,0,.4);
+}
+
+.page-img{
+  width:240px;
+  border-radius:22px;
+  margin-top:20px;
+  box-shadow:0 0 25px rgba(255,255,255,.6);
+}
+
+/* FLOATING IMAGES */
+.float-container{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  z-index:-1;
+}
+.float-img{
+  position:absolute;
+  width:90px;
+  opacity:0.35;
+  animation:float linear infinite;
+}
+
+@keyframes float{
+  from{top:110%}
+  to{top:-20%}
+}
+
+.float-img:nth-child(1){ left:5%; animation-duration:14s; }
+.float-img:nth-child(2){ left:45%; animation-duration:18s; }
+.float-img:nth-child(3){ left:75%; animation-duration:16s; }
+
+/* FINAL IMAGE */
+.us-container{
+  position:relative;
+  display:inline-block;
+  margin-top:20px;
+}
+.us-img{
+  width:280px;
+  border-radius:28px;
+  box-shadow:0 0 35px rgba(255,255,255,.8);
+}
+.us-text{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background:rgba(0,0,0,0.4);
+  padding:18px;
+  border-radius:18px;
+  font-size:17px;
+  line-height:1.6;
+  width:90%;
+}
+
+/* HEART */
+.heart{
+  position:fixed;
+  width:16px;
+  height:16px;
+  background:pink;
+  transform:rotate(45deg);
+  animation:explode 2s ease-out forwards;
+  z-index:99;
+}
+.heart::before,.heart::after{
+  content:"";
+  position:absolute;
+  width:16px;
+  height:16px;
+  background:pink;
+  border-radius:50%;
+}
+.heart::before{top:-8px}
+.heart::after{left:-8px}
+
+@keyframes explode{
+  to{opacity:0;transform:translateY(-160px) scale(2.5) rotate(45deg)}
+}
+
+.particle{
+  position:fixed;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" playsinline></audio>
+
+<!-- LOCK -->
+<div id="lock" class="page active">
+  <div class="float-container">
+    <img src="anime1.jpeg" class="float-img">
+    <img src="anime2.jpeg" class="float-img">
+    <img src="anime3.jpeg" class="float-img">
+  </div>
+
+  <h1>🔒 Only for My Hubby</h1><br>
+
+  <input 
+    type="password" 
+    id="password"
+    placeholder="Enter password ❤️"
+    inputmode="text"
+    autocomplete="off"
+    style="padding:12px;font-size:18px;border-radius:15px;border:none;width:220px;"
+  >
+  <br><br>
+  <button id="enterBtn">Enter ❤️</button>
+</div>
+
+<!-- MENU -->
+<div id="menu" class="page">
+  <button class="home" onclick="goHome()">🏠</button>
+  <h1>Choose One, My Aji 💕</h1>
+  <button onclick="openChoice('message')">💌 Message</button>
+  <button onclick="openChoice('memory')">🌙 Memory</button>
+  <button onclick="openChoice('care')">🎶 Care</button>
+  <button onclick="openChoice('secret')">🔐 Secret</button>
+</div>
+
+<!-- CONTENT -->
+<div id="content" class="page">
+  <button class="home" onclick="goMenu()">←</button>
+  <div id="textBox"></div>
+  <img id="pageImage" class="page-img"><br>
+  <button onclick="goSuspense()">Continue ❤️</button>
+</div>
+
+<!-- SUSPENSE -->
+<div id="suspense" class="page">
+  <h1>Are you sure you want to do this…? ❤️</h1><br>
+  <button onclick="stepTwo()">YES</button>
+  <button onclick="goContent()">NO</button>
+</div>
+
+<!-- CONFIRM -->
+<div id="valentineConfirm" class="page">
+  <h1>Be my Valentine forever? 💖</h1><br>
+  <button onclick="openFinal()">YES</button>
+  <button onclick="goContent()">NO</button>
+</div>
+
+<!-- FINAL -->
+<div id="final" class="page">
+  <button class="home" onclick="goHome()">🏠</button>
+  <div class="us-container">
+    <img src="us.jpeg" class="us-img">
+    <div class="us-text" id="finalText"></div>
+  </div>
+</div>
+
+<script>
+const correctPassword="Samee@0202";
+const bgMusic=document.getElementById("bgMusic");
+let stopTimer;
+
+function playSegment(file,start,end,loop=false){
+  clearTimeout(stopTimer);
+  bgMusic.src=file;
+  bgMusic.currentTime=start;
+  bgMusic.play();
+  stopTimer=setTimeout(()=>{ bgMusic.pause(); if(loop) playSegment(file,start,end,true); },(end-start)*1000);
+}
+
+function show(id){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+function unlock(){
+  if(password.value===correctPassword) show("menu");
+  else alert("Wrong password ❤️");
+}
+
+enterBtn.onclick=unlock;
+password.onkeydown=e=>{ if(e.key==="Enter") unlock(); }
+
+const data={
+  message:{
+    html:`<h1>Just a Message for You 💌</h1><p>
+    No matter how many miles stand between us,<br>
+    my heart has always chosen you 💖</p>`,
+    img:"anime9.jpeg"
+  },
+  memory:{
+    html:`<h1>A Memory We Share 🌙</h1><p>
+    Being with you is my most precious time 💖✨.<br><br>
+    No stress, no worries — just peace 💫.<br>
+    With you, I feel relaxed, safe, and calm 🤍.<br><br>
+    Being close to you feels warm inside,<br>
+    like my heart finally found rest 🥰💞.</p>`,
+    img:"anime7.jpeg"
+  },
+  care:{
+    html:`<h1>Care 🎶</h1><p>
+    Loving you feels like home 💞</p>`,
+    img:"anime10.jpeg"
+  },
+  secret:{
+    html:`<h1>Secret 🔐</h1><p>
+    I choose you — always ❤️</p>`,
+    img:"anime8.jpeg"
+  }
+};
+
+function openChoice(k){
+  textBox.innerHTML=data[k].html;
+  pageImage.src=data[k].img;
+  show("content");
+}
+
+function goHome(){ show("lock"); }
+function goMenu(){ show("menu"); }
+function goContent(){ show("content"); }
+function goSuspense(){ show("suspense"); }
+function stepTwo(){ show("valentineConfirm"); }
+
+function openFinal(){
+  show("final");
+  const lines=[
+    "Happy Valentine’s Day ❤️",
+    "My heart rests with you",
+    "Ajish belongs to Aafrin 💖"
+  ];
+  finalText.innerHTML="";
+  let i=0;
+  (function type(){
+    if(i<lines.length){
+      finalText.innerHTML+=`<p>${lines[i]}</p>`;
+      i++; setTimeout(type,1200);
+    }
+  })();
+}
+
+document.addEventListener("mousemove",e=>heart(e.clientX,e.clientY));
+document.addEventListener("touchmove",e=>heart(e.touches[0].clientX,e.touches[0].clientY));
+function heart(x,y){
+  const h=document.createElement("div");
+  h.className="heart";
+  h.style.left=x+"px";
+  h.style.top=y+"px";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),2000);
+}
+</script>
+
+</body>
+</html>
