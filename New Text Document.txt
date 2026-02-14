@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Hubby ❤️</title>
+
+<style>
+body{
+  margin:0;
+  background:linear-gradient(135deg,#ffb6c1,#ffd1dc);
+  color:white;
+  font-family:sans-serif;
+  text-align:center;
+}
+.page{display:none;min-height:100vh;padding:70px 20px}
+.page.active{display:block}
+button{
+  padding:14px 30px;
+  margin:12px;
+  border:none;
+  border-radius:25px;
+  background:rgba(255,255,255,0.35);
+  color:white;
+  font-size:18px;
+}
+img{
+  width:260px;
+  border-radius:22px;
+  margin-top:20px;
+}
+p{font-size:18px;line-height:1.7}
+</style>
+</head>
+
+<body>
+
+<div id="menu" class="page active">
+  <h1>Choose One, My Aji 💕</h1>
+  <button onclick="open('message')">💌 Message</button><br>
+  <button onclick="open('memory')">🌙 Memory</button><br>
+  <button onclick="open('care')">🎶 Care</button><br>
+  <button onclick="open('secret')">🔐 Secret</button>
+</div>
+
+<div id="content" class="page">
+  <div id="text"></div>
+  <img id="img"><br>
+  <button onclick="open('suspense')">Continue ❤️</button>
+</div>
+
+<div id="suspense" class="page">
+  <h2>Are you sure? ❤️</h2>
+  <button onclick="open('valentine')">YES</button>
+  <button onclick="open('menu')">NO</button>
+</div>
+
+<div id="valentine" class="page">
+  <h2>Will you be my Valentine forever? 💖</h2>
+  <button onclick="final()">YES ❤️</button>
+</div>
+
+<div id="final" class="page">
+  <img src="us.jpeg">
+  <div id="finalText"></div>
+</div>
+
+<script>
+function open(id){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+const data={
+  message:{t:"<p>You are my safest place ❤️</p>",i:"anime9.jpeg"},
+  memory:{t:"<p>Being with you is my precious time — no stress, only warmth 💞</p>",i:"anime7.jpeg"},
+  care:{t:"<p>You care for me like no one else 💖</p>",i:"anime10.jpeg"},
+  secret:{t:"<p>I choose you. Always 💕</p>",i:"anime8.jpeg"}
+};
+
+function open(k){
+  if(data[k]){
+    text.innerHTML=data[k].t;
+    img.src=data[k].i;
+    openPage("content");
+  } else openPage(k);
+}
+
+function openPage(id){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+function final(){
+  openPage("final");
+  const lines=[
+    "Happy Valentine’s Day ❤️",
+    "No stress. Only warmth.",
+    "I want this forever.",
+    "Ajish belongs to Aafrin 💖"
+  ];
+  let i=0;
+  function next(){
+    if(i<lines.length){
+      const p=document.createElement("p");
+      p.innerHTML=lines[i++];
+      finalText.appendChild(p);
+      setTimeout(next,1200);
+    }
+  }
+  next();
+}
+</script>
+
+</body>
+</html>

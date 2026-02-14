@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Only For You ❤️</title>
+
+<style>
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#ffb6c1,#ffd1dc);
+  font-family:sans-serif;
+  color:white;
+}
+input{
+  padding:16px;
+  font-size:20px;
+  border-radius:18px;
+  border:none;
+  outline:none;
+  margin-top:20px;
+}
+button{
+  margin-top:20px;
+  padding:14px 30px;
+  font-size:18px;
+  border:none;
+  border-radius:25px;
+  background:rgba(255,255,255,0.35);
+  color:white;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🔒 Only for My Hubby</h1>
+
+<form action="home.html" method="GET" onsubmit="return check()">
+  <input
+    type="password"
+    id="pwd"
+    placeholder="Enter password ❤️"
+    autocomplete="current-password"
+    autofocus
+  >
+  <br>
+  <button type="submit">Enter ❤️</button>
+</form>
+
+<script>
+function check(){
+  const pwd = document.getElementById("pwd").value;
+  if(pwd === "Samee@0202"){
+    return true;
+  }
+  alert("Wrong password ❤️");
+  return false;
+}
+</script>
+
+</body>
+</html>
