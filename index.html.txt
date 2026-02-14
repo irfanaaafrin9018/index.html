@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Hubby ❤️</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
+
+body{
+  background:linear-gradient(135deg,#ffb6c1,#ffd1dc);
+  color:white;
+  text-align:center;
+}
+
+/* PAGES */
+.page{
+  display:none;
+  min-height:100vh;
+  padding:70px 20px;
+}
+.page.active{display:block}
+
+/* INPUT */
+input{
+  padding:14px;
+  font-size:20px;
+  border-radius:16px;
+  border:none;
+  outline:none;
+  width:240px;
+}
+
+/* BUTTONS */
+button{
+  padding:12px 26px;
+  margin:12px;
+  border:none;
+  border-radius:25px;
+  background:rgba(255,255,255,0.35);
+  color:white;
+  font-size:17px;
+}
+
+/* TEXT */
+p{
+  font-size:18px;
+  line-height:1.7;
+  margin-top:14px;
+}
+
+/* IMAGES */
+img{
+  width:260px;
+  border-radius:22px;
+  margin-top:20px;
+  box-shadow:0 0 25px rgba(255,255,255,.6);
+}
+
+/* FINAL TEXT BOX */
+#finalText{
+  margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🔒 LOCK PAGE -->
+<div id="lock" class="page active">
+  <h1>🔒 Only for My Hubby</h1>
+  <br>
+  <input
+    id="password"
+    type="password"
+    placeholder="Enter password ❤️"
+    inputmode="text"
+    autocomplete="off"
+    autocapitalize="none"
+    autocorrect="off"
+    autofocus
+  >
+  <br><br>
+  <button onclick="unlock()">Enter ❤️</button>
+</div>
+
+<!-- 🏠 MENU -->
+<div id="menu" class="page">
+  <h1>Choose One, My Aji 💕</h1>
+  <button onclick="openChoice('message')">💌 Message</button><br>
+  <button onclick="openChoice('memory')">🌙 Memory</button><br>
+  <button onclick="openChoice('care')">🎶 Care</button><br>
+  <button onclick="openChoice('secret')">🔐 Secret</button>
+</div>
+
+<!-- 💖 CONTENT -->
+<div id="content" class="page">
+  <div id="textBox"></div>
+  <img id="pageImg">
+  <br>
+  <button onclick="show('suspense')">Continue ❤️</button>
+</div>
+
+<!-- 😳 SUSPENSE PAGE -->
+<div id="suspense" class="page">
+  <h1>Are you sure you want to continue? ❤️</h1>
+  <button onclick="show('valentine')">YES</button>
+  <button onclick="show('menu')">NO</button>
+</div>
+
+<!-- 💘 VALENTINE QUESTION -->
+<div id="valentine" class="page">
+  <h1>Will you be my Valentine for the rest of my life? 💖</h1>
+  <button onclick="showFinal()">YES ❤️</button>
+  <button onclick="show('menu')">NO</button>
+</div>
+
+<!-- 💑 FINAL US PAGE -->
+<div id="final" class="page">
+  <h1>Forever Us 💞</h1>
+  <img src="us.jpeg">
+  <div id="finalText"></div>
+</div>
+
+<script>
+/* PASSWORD */
+const PASSWORD = "Samee@0202";
+const passwordInput = document.getElementById("password");
+
+/* ENTER KEY SUPPORT */
+passwordInput.addEventListener("keydown", e=>{
+  if(e.key === "Enter") unlock();
+});
+
+/* PAGE SWITCH */
+function show(id){
+  document.querySelectorAll(".page")
+    .forEach(p=>p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+/* UNLOCK */
+function unlock(){
+  if(passwordInput.value.trim() === PASSWORD){
+    show("menu");
+  } else {
+    alert("Wrong password ❤️");
+  }
+}
+
+/* CONTENT DATA */
+const data = {
+  message:{
+    text:`<h2>💌 Just a Message</h2>
+    <p>
+    No matter how many miles stand between us,<br>
+    my heart has always known where it belongs — with you.<br><br>
+    With you, love feels safe.<br>
+    With you, I am home 💖
+    </p>`,
+    img:"anime9.jpeg"
+  },
+  memory:{
+    text:`<h2>🌙 A Memory</h2>
+    <p>
+    Being with you is my most precious time.<br>
+    No stress. No fear.<br>
+    Just being relaxed and feeling warm inside you 💕
+    </p>`,
+    img:"anime7.jpeg"
+  },
+  care:{
+    text:`<h2>🎶 Care</h2>
+    <p>
+    Even from far away,<br>
+    you protect me, hold me,<br>
+    and love me like no one else 💞
+    </p>`,
+    img:"anime10.jpeg"
+  },
+  secret:{
+    text:`<h2>🔐 A Secret</h2>
+    <p>
+    Loving you is the easiest thing I do.<br>
+    I choose you — always ❤️
+    </p>`,
+    img:"anime8.jpeg"
+  }
+};
+
+/* OPEN CONTENT */
+function openChoice(key){
+  document.getElementById("textBox").innerHTML = data[key].text;
+  document.getElementById("pageImg").src = data[key].img;
+  show("content");
+}
+
+/* FINAL LINE-BY-LINE TEXT */
+const finalLines = [
+  "Happy Valentine’s Day, my Aji ❤️",
+  "After every fight, we laugh again,",
+  "with no anger in our hearts.",
+  "I want to continue this love forever.",
+  "My hubby — my home, my always.",
+  "Finally… Ajish belongs to Aafrin 💖💞😍"
+];
+
+function showFinal(){
+  show("final");
+
+  const box = document.getElementById("finalText");
+  box.innerHTML = "";
+  let i = 0;
+
+  function nextLine(){
+    if(i < finalLines.length){
+      const p = document.createElement("p");
+      p.innerHTML = finalLines[i];
+      box.appendChild(p);
+      i++;
+      setTimeout(nextLine, 1200);
+    }
+  }
+
+  nextLine();
+}
+</script>
+
+</body>
+</html>
