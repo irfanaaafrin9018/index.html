@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Hubby ❤️</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
+
+body{
+  background:linear-gradient(135deg,#ffb6c1,#ffd1dc);
+  color:white;
+  text-align:center;
+  overflow:hidden;
+}
+
+.page{
+  display:none;
+  min-height:100vh;
+  padding:70px 20px;
+  position:relative;
+}
+.page.active{display:block}
+
+button{
+  padding:12px 25px;
+  margin:10px;
+  border:none;
+  border-radius:25px;
+  background:rgba(255,255,255,0.35);
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.home{
+  position:absolute;
+  top:15px;
+  left:15px;
+}
+
+p{
+  font-size:18px;
+  line-height:1.7;
+  text-shadow:0 2px 6px rgba(0,0,0,.4);
+}
+
+.page-img{
+  width:240px;
+  border-radius:22px;
+  margin-top:20px;
+  box-shadow:0 0 25px rgba(255,255,255,.6);
+}
+
+/* FLOATING IMAGES */
+.float-container{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  z-index:-1;
+}
+.float-img{
+  position:absolute;
+  width:90px;
+  opacity:0.35;
+  animation-name:float;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes float{
+  from{top:110%}
+  to{top:-20%}
+}
+
+/* Each image floats independently */
+.float-img:nth-child(1){ left:5%; animation-duration:14s; animation-delay:0s; }
+.float-img:nth-child(2){ left:45%; animation-duration:18s; animation-delay:3s; }
+.float-img:nth-child(3){ left:75%; animation-duration:16s; animation-delay:6s; }
+
+/* FINAL US IMAGE + TEXT */
+.us-container{
+  position:relative;
+  display:inline-block;
+  margin-top:20px;
+}
+.us-img{
+  width:280px;
+  border-radius:28px;
+  box-shadow:0 0 35px rgba(255,255,255,.8);
+}
+.us-text{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background:rgba(0,0,0,0.4);
+  padding:18px;
+  border-radius:18px;
+  font-size:17px;
+  line-height:1.6;
+  width:90%;
+  text-align:center;
+}
+
+/* HEARTS + FIREWORKS */
+.heart{
+  position:fixed;
+  width:16px;
+  height:16px;
+  background:pink;
+  transform:rotate(45deg);
+  animation:explode 2s ease-out forwards;
+  z-index:99;
+}
+.heart::before,.heart::after{
+  content:"";
+  position:absolute;
+  width:16px;
+  height:16px;
+  background:pink;
+  border-radius:50%;
+}
+.heart::before{top:-8px}
+.heart::after{left:-8px}
+
+@keyframes explode{
+  to{opacity:0;transform:translateY(-160px) scale(2.5) rotate(45deg)}
+}
+
+/* FIREWORK PARTICLE */
+.particle{
+  position:fixed;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  pointer-events:none;
+  opacity:1;
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" playsinline></audio>
+
+<!-- PASSWORD PAGE -->
+<div id="lock" class="page active">
+  <div class="float-container">
+    <img src="anime1.jpeg" class="float-img">
+    <img src="anime2.jpeg" class="float-img">
+    <img src="anime3.jpeg" class="float-img">
+  </div>
+  <h1>🔒 Only for My Hubby</h1><br>
+  <input type="password" id="password"><br><br>
+  <button id="enterBtn">Enter ❤️</button>
+</div>
+
+<!-- MENU -->
+<div id="menu" class="page">
+  <button class="home" onclick="goHome()">🏠</button>
+  <h1>Choose One, My Aji 💕</h1>
+  <button onclick="openChoice('message')">💌 Message</button>
+  <button onclick="openChoice('memory')">🌙 Memory</button>
+  <button onclick="openChoice('care')">🎶 Care</button>
+  <button onclick="openChoice('secret')">🔐 Secret</button>
+</div>
+
+<!-- CONTENT -->
+<div id="content" class="page">
+  <button class="home" onclick="goMenu()">←</button>
+  <div id="textBox"></div>
+  <img id="pageImage" class="page-img"><br>
+  <button onclick="goSuspense()">Continue ❤️</button>
+</div>
+
+<!-- SUSPENSE PAGE -->
+<div id="suspense" class="page">
+  <div class="float-container">
+    <img src="anime1.jpeg" class="float-img">
+    <img src="anime2.jpeg" class="float-img">
+    <img src="anime3.jpeg" class="float-img">
+  </div>
+  <h1>Are you sure you want to do this…? There’s no turning back ❤️</h1><br>
+  <button onclick="stepTwo()">YES</button>
+  <button onclick="goContent()">NO</button>
+</div>
+
+<!-- SECOND QUESTION PAGE -->
+<div id="valentineConfirm" class="page">
+  <div class="float-container">
+    <img src="anime1.jpeg" class="float-img">
+    <img src="anime2.jpeg" class="float-img">
+    <img src="anime3.jpeg" class="float-img">
+  </div>
+  <h1>Are you sure you want to be my Valentine for the rest of the years? 💖</h1><br>
+  <button onclick="openFinal()">YES</button>
+  <button onclick="goContent()">NO</button>
+</div>
+
+<!-- FINAL US PAGE -->
+<div id="final" class="page">
+  <button class="home" onclick="goHome()">🏠</button>
+  <div class="us-container">
+    <img src="us.jpeg" class="us-img">
+    <div class="us-text" id="finalText"></div>
+  </div><br><br>
+  <button onclick="restart()">🔁 Restart</button>
+</div>
+
+<script>
+const correctPassword="Samee@0202";
+let stopTimer, fireworksInterval;
+
+// MUSIC FUNCTIONS
+function playSegment(file,start,end,loop=false){
+  stopMusic();
+  bgMusic.src=file;
+  bgMusic.currentTime=start;
+  bgMusic.play();
+  stopTimer=setTimeout(()=>{
+    bgMusic.pause();
+    if(loop) playSegment(file,start,end,true);
+  },(end-start)*1000);
+}
+function playHomeSong(){ playSegment("you.mp3",48,58,true); }
+function stopMusic(){
+  clearTimeout(stopTimer);
+  clearInterval(fireworksInterval);
+  bgMusic.pause();
+}
+
+// PAGE NAVIGATION
+function show(id){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  if(id==="lock") playHomeSong();
+}
+function goHome(){ stopMusic(); show("lock"); }
+function goMenu(){ stopMusic(); show("menu"); }
+function goContent(){ stopMusic(); show("content"); }
+function restart(){ stopMusic(); show("lock"); }
+
+// PASSWORD
+const passwordInput = document.getElementById("password");
+const enterBtn = document.getElementById("enterBtn");
+
+function unlock(){
+  if(passwordInput.value === correctPassword){
+    playHomeSong();
+    show("menu");
+  } else alert("Wrong password ❤️");
+}
+
+// ENTER KEY FUNCTIONALITY
+passwordInput.addEventListener("keydown", function(e){
+  if(e.key === "Enter"){ unlock(); }
+});
+enterBtn.addEventListener("click", unlock);
+
+// DATA
+const data={
+  message:{
+    html:`<h1>Just a Message for You 💌</h1><p>
+    No matter how many miles stand between us 💕💌😍,<br>
+    Aji, my heart has always known where it belongs — with you 💖✨.<br><br>
+    When you call me Jillu or Amuu 🥰🌹,<br>
+    the world feels lighter 💫.<br><br>
+    With you, love feels safe 💑.<br>
+    With you, this Maa found her home 💞.</p>`,
+    img:"anime9.jpeg", file:"message.mp3", start:105, end:120
+  },
+  memory:{
+    html:`<h1>A Memory We Share 🌙</h1><p>
+    Do you remember those quiet moments, Aji 💖✨?<br>
+    Just us… no noise, no rush 💑💫.<br><br>
+    You calling me Papa or Amma 🥰🌹,<br>
+    me smiling without realizing it 😍💌.</p>`,
+    img:"anime7.jpeg", file:"memory.mp3", start:140, end:155
+  },
+  care:{
+    html:`<h1>Care 🎶</h1><p>
+    Care… feels like you holding me from far away 💖💞.<br>
+    No one cares for me like you did 💕🥰.<br>
+    I want it forever, Enanga is forever 💫💖.</p>`,
+    img:"anime10.jpeg", file:"song.mp3", start:44, end:62
+  },
+  secret:{
+    html:`<h1>A Little Secret 🔐</h1><p>
+    Even on my hardest days 💔,<br>
+    loving you is the easiest thing 😍💖.<br><br>
+    Your Amuu chooses you — always 💞✨💑.</p>`,
+    img:"anime8.jpeg", file:"secret.mp3", start:171, end:180
+  }
+};
+
+// CONTENT FUNCTIONS
+function openChoice(k){
+  const d=data[k];
+  document.getElementById("textBox").innerHTML=d.html;
+  document.getElementById("pageImage").src=d.img;
+  playSegment(d.file,d.start,d.end);
+  show("content");
+}
+
+// SUSPENSE STEPS
+function goSuspense(){ show("suspense"); }
+function stepTwo(){ show("valentineConfirm"); }
+
+// FINAL PAGE
+function openFinal(){
+  stopMusic();
+  playSegment("love.mp3",60,70,true);
+  show("final");
+
+  const finalTextLines = [
+    "Happy Valentine’s Day, my Aji ❤️",
+    "After every fight, we laugh again",
+    "with no anger in our hearts.",
+    "I want to continue this love forever,",
+    "my hubby — my home, my always.",
+    "Finally… Ajish belongs to Aafrin 💖💞😍"
+  ];
+
+  const finalTextDiv = document.getElementById("finalText");
+  finalTextDiv.innerHTML = "";
+  let index = 0;
+
+  function showLine(){
+    if(index < finalTextLines.length){
+      const line = document.createElement("p");
+      line.innerHTML = finalTextLines[index];
+      finalTextDiv.appendChild(line);
+      burst(Math.random()*window.innerWidth, Math.random()*window.innerHeight);
+      index++;
+      setTimeout(showLine, 1200);
+    }
+  }
+
+  showLine();
+}
+
+// FIREWORKS
+function burst(x,y){
+  const count = 10 + Math.floor(Math.random()*5);
+  for(let i=0;i<count;i++){
+    const p = document.createElement("div");
+    p.className="particle";
+    p.style.left = x+"px";
+    p.style.top = y+"px";
+    p.style.background = `hsl(${Math.random()*360},100%,70%)`;
+    document.body.appendChild(p);
+
+    const angle = Math.random()*2*Math.PI;
+    const speed = 2 + Math.random()*4;
+    const vx = Math.cos(angle)*speed;
+    const vy = Math.sin(angle)*speed;
+
+    let alpha = 1;
+    let anim = setInterval(()=>{
+      x += vx;
+      y += vy;
+      alpha -= 0.03;
+      p.style.left = x+"px";
+      p.style.top = y+"px";
+      p.style.opacity = alpha;
+      if(alpha<=0){ p.remove(); clearInterval(anim); }
+    },16);
+  }
+}
+
+// HEART FOLLOW
+document.addEventListener("touchmove",e=>{ heart(e.touches[0].clientX,e.touches[0].clientY); });
+document.addEventListener("mousemove",e=>{ heart(e.clientX,e.clientY); });
+function heart(x,y){
+  const h=document.createElement("div");
+  h.className="heart";
+  h.style.left=x+"px";
+  h.style.top=y+"px";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),2000);
+}
+</script>
+
+</body>
+</html>
